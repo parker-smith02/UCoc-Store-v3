@@ -6,7 +6,11 @@
     rounded="lg"
     class="pa-8 ma-8"
   >
-  <v-text-field v-model="searchQuery" label="Search" type="input"></v-text-field>
+    <v-text-field
+      v-model="searchQuery"
+      label="Search"
+      type="input"
+    ></v-text-field>
     <v-table height="32rem">
       <thead>
         <tr>
@@ -20,23 +24,26 @@
       </thead>
       <tbody>
         <tr v-for="member in filteredMembers" :key="member.id">
-            <td>{{ member.first_name }} {{ member.last_name }}</td>
-            <td>{{ member.email }}</td>
-            <td>
-                <v-chip color="orange" v-if="!member.phone_number">None on File</v-chip>
-                {{ member.phone_number }}</td>
-            <td>
-                <v-chip color="green" v-if="member.dues">Yes</v-chip>
-                <v-chip color="red" v-else>No</v-chip>
-            </td>
-            <td>
-                <v-chip v-if="!member.checked_out_gear">None</v-chip>
-                {{ member.checked_out_gear }}
-            </td>
-            <td>
-                <v-chip v-if="!member.trips_signed_up_for">None</v-chip>
-                {{ member.trips_signed_up_for }}
-            </td>
+          <td>{{ member.first_name }} {{ member.last_name }}</td>
+          <td>{{ member.email }}</td>
+          <td>
+            <v-chip color="orange" v-if="!member.phone_number"
+              >None on File</v-chip
+            >
+            {{ member.phone_number }}
+          </td>
+          <td>
+            <v-chip color="green" v-if="member.dues">Yes</v-chip>
+            <v-chip color="red" v-else>No</v-chip>
+          </td>
+          <td>
+            <v-chip v-if="!member.checked_out_gear">None</v-chip>
+            {{ member.checked_out_gear }}
+          </td>
+          <td>
+            <v-chip v-if="!member.trips_signed_up_for">None</v-chip>
+            {{ member.trips_signed_up_for }}
+          </td>
         </tr>
       </tbody>
     </v-table>
@@ -52,8 +59,11 @@ const props = defineProps({
 });
 const searchQuery = ref("");
 const filteredMembers = computed(() => {
-    return props.members.filter(member => member.first_name.toLowerCase().includes(searchQuery.value.toLowerCase())
-     || member.last_name.toLowerCase().includes(searchQuery.value.toLowerCase()))
-})
-
+  return props.members.filter((member) => {
+    const name = `${member.first_name.toLowerCase()} ${
+      member.last_name.toLowerCase()
+    }`;
+    return name.includes(searchQuery.value.toLowerCase());
+  });
+});
 </script>
