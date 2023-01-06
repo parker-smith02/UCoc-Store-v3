@@ -24,6 +24,7 @@
         @table-updated="updateGroupOrderTable"
       />
       <MemberTable :members="members" :key="memberTableKey" />
+      <TripsTable :trips="trips" :key="tripTableKey" @table-updated="updateTripsTable" />
     </main>
   </v-row>
 </template>
@@ -35,6 +36,7 @@ import AdminProductTable from "../components/admin/AdminProductTable.vue";
 import AdminNav from "../components/admin/AdminNav.vue";
 import GroupOrderTable from "../components/admin/GroupOrderTable.vue";
 import MemberTable from "../components/admin/MemberTable.vue";
+import TripsTable from "../components/admin/TripsTable.vue";
 
 const merchItems = ref({});
 const groupOrderItems = ref({});
@@ -42,6 +44,8 @@ const productTableKey = ref(0);
 const groupOrderTableKey = ref(0);
 const members = ref([]);
 const memberTableKey = ref(0);
+const trips = ref({});
+const tripTableKey = ref(0);
 
 const fetchMerch = async () => {
   const query = supabase.from("merch").select("*");
@@ -78,10 +82,23 @@ const fetchMembers = async () => {
   memberTableKey.value++;
 };
 
+const fetchTrips = async () => {
+  const query = supabase.from("trips").select("*");
+  const { data: tripData, error } = await query;
+  if (error) {
+    console.log(error);
+    return false;
+  }
+  trips.value = tripData;
+  tripTableKey.value++;
+
+}
+
 onMounted(() => {
   fetchMerch();
   fetchGroupOrders();
   fetchMembers();
+  fetchTrips();
 });
 
 const updateMerchTable = () => {
@@ -91,4 +108,8 @@ const updateMerchTable = () => {
 const updateGroupOrderTable = () => {
   fetchGroupOrders();
 };
+
+const updateTripsTable = () => {
+  fetchTrips();
+}
 </script>

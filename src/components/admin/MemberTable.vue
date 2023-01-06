@@ -2,10 +2,15 @@
   <v-card
     width="64rem"
     title="Active Members"
+    subtitle=""
     elevation="10"
     rounded="lg"
     class="pa-8 ma-8"
   >
+  <v-card-subtitle
+  class="pb-4">
+    {{ members.length }} Members
+  </v-card-subtitle>
     <v-text-field
       v-model="searchQuery"
       label="Search"
@@ -58,6 +63,7 @@ const props = defineProps({
   members: [],
 });
 const searchQuery = ref("");
+
 const filteredMembers = computed(() => {
   return props.members.filter((member) => {
     const name = `${member.first_name.toLowerCase()} ${
