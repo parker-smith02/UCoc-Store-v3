@@ -34,13 +34,16 @@
                   required
                 ></v-text-field>
               </v-col>
-              <v-col cols="12">
-                <v-textarea
-                  label="Description"
-                  v-model="formDesc"
-                  required
-                >
+              <v-col cols="6">
+                <v-textarea label="Description" v-model="formDesc" required>
                 </v-textarea>
+              </v-col>
+              <v-col cols="6">
+                <v-textarea
+                  label="Things To Bring"
+                  v-model="formItems"
+                  hint="Ex: water, food, warm clothes"
+                ></v-textarea>
               </v-col>
               <v-col cols="8" sm="6" md="4">
                 <v-radio-group
@@ -56,15 +59,27 @@
                 </v-radio-group>
               </v-col>
               <v-col cols="8" sm="6" md="4">
-                <v-text-field
-                label="Number of Spots"
-                v-model="formSpots"></v-text-field>
+                <v-file-input
+                  v-model="formImageArr"
+                  label="Upload Images"
+                  variant="filled"
+                  prepend-icon="mdi-camera"
+                  multiple
+                ></v-file-input>
               </v-col>
               <v-col cols="8" sm="6" md="4">
                 <v-text-field
-                type="date"
-                label="Date"
-                required></v-text-field>
+                  v-model="formStartDate"
+                  type="date"
+                  label="Start Date"
+                  required
+                ></v-text-field>
+                <v-text-field
+                  v-model="formEndDate"
+                  type="date"
+                  label="End Date"
+                  hint="Leave Blank for a Daytrip"
+                ></v-text-field>
               </v-col>
             </v-row>
           </v-container>
@@ -95,18 +110,25 @@ const formDesc = ref("");
 const formActivityLevel = ref("");
 const formLocation = ref("");
 const formSpots = ref(0);
+const formImageArr = ref();
+const formItems = ref("");
+const formStartDate = ref("");
+const formEndDate = ref("");
 
 const handleFormSubmit = async () => {
   dialog.value = false;
-  const sizeArr = formatArray(formSizes.value);
-  const colorArr = formatArray(formColors.value);
-  const query = supabase.from("merch").insert([
+  const itemArr = formatArray(formItems.value);
+  const query = supabase.from("trips").insert([
     {
-      name: formName.value,
+      title: formTitle.value,
       description: formDesc.value,
-      sizes: sizeArr,
-      quantity: formQuantity.value,
-      colors: colorArr,
+      start_date: formStartDate.value,
+      end_date: formEndDate.value,
+      activity_level: formActivityLevel.value,
+      things_to_bring: itemArr,
+      number_of_spots: formSpots.value,
+      number_of_signups: 0,
+      location: formLocation.value,
     },
   ]);
   const { data, error } = await query;
@@ -115,7 +137,31 @@ const handleFormSubmit = async () => {
     return false;
   }
   console.log(data);
+  await handleImageUpload();
   emit("formSubmit");
+};
+
+const handleImageUpload = async () => {
+  const images = formImageArr.value;
+  images.forEach(async (image) => {
+    try {
+      if (!image) {
+        throw new Error("Select a file to upload");
+      }
+      const fileExt = image.name.split(".").pop();
+      const filePath = `${Math.random()}.${fileExt}`;
+
+      let { error: uploadError } = await supabase.storage
+        .from("images")
+        .upload(`./trips/${formTitle.value}/${filePath}`, image);
+      if (uploadError) {
+        console.log(error);
+        return false;
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  });
 };
 
 const formatArray = (formData) => {

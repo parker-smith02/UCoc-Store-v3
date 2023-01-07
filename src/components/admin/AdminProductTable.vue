@@ -69,6 +69,16 @@ const handleDelete = async (name) => {
     console.log(error);
     return false;
   }
+
+  let { error: deleteError } = await supabase.storage
+    .from("images")
+    .remove(`./merch/${name}`);
+
+  if (error) {
+    console.log(error);
+    return false;
+  }
+
   emit("tableUpdated");
 };
 </script>

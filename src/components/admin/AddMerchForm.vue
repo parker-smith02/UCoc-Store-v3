@@ -28,12 +28,12 @@
                 ></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field
+                <v-textarea
                   label="Description"
                   v-model="formDesc"
                   persistent-hint
                   required
-                ></v-text-field>
+                ></v-textarea>
               </v-col>
               <v-col cols="12">
                 <v-text-field
@@ -49,7 +49,15 @@
                   hint="EX: blue, red, pruple"
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" sm="6"> </v-col>
+              <v-col cols="12" sm="6">
+                <v-file-input
+                  v-model="formImageArr"
+                  label="Upload Images"
+                  variant="filled"
+                  prepend-icon="mdi-camera"
+                  multiple
+                ></v-file-input>
+              </v-col>
             </v-row>
           </v-container>
           <small>*indicates required field</small>
@@ -79,6 +87,7 @@ const formDesc = ref("");
 const formSizes = ref("");
 const formQuantity = ref(null);
 const formColors = ref("");
+const formImageArr = ref();
 
 const handleFormSubmit = async () => {
   dialog.value = false;
@@ -99,7 +108,31 @@ const handleFormSubmit = async () => {
     return false;
   }
   console.log(data);
+  await handleImageUpload();
   emit("formSubmit");
+};
+
+const handleImageUpload = async () => {
+  const images = formImageArr.value;
+  images.forEach(async (image) => {
+    try {
+      if (!image) {
+        throw new Error("Select a file to upload");
+      }
+      const fileExt = image.name.split(".").pop();
+      const filePath = `${Math.random()}.${fileExt}`;
+
+      let { error: uploadError } = await supabase.storage
+        .from("images")
+        .upload(`./merch/${formName.value}/${filePath}`, image);
+      if (uploadError) {
+        console.log(error);
+        return false;
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  });
 };
 
 const formatArray = (formData) => {

@@ -48,7 +48,7 @@
   </v-card>
 </template>
   
-<script setup>
+   <script setup>
 import { ref } from "@vue/reactivity";
 import ConfirmDelete from "./ConfirmDelete.vue";
 import AddGroupOrderForm from "./AddGroupOrderForm.vue";
