@@ -4,7 +4,7 @@
       <template v-slot:activator="{ props }">
         <v-btn color="primary" v-bind="props"> Add Group Order </v-btn>
       </template>
-      <v-card>
+      <v-card class="center">
         <v-card-title>
           <span class="text-h5">Add Group Order</span>
         </v-card-title>
