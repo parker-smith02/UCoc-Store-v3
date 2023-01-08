@@ -31,6 +31,7 @@
 <script setup>
 import { ref } from "@vue/reactivity";
 import { supabase } from "../supabase";
+import router from "../router";
 
 const userEmail = ref("");
 const userPassword = ref("");
@@ -51,6 +52,7 @@ const handleLogin = async () => {
     alert(error.error_description || error.message);
   } finally {
     loading.value = false;
+    router.push("/admin/main");
   }
 };
 
