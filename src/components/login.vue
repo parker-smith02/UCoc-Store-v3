@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container @keypress.enter="handleLogin">
     <v-row justify="center">
       <v-card width="32rem">
         <v-card-title> Log in to View Admin Panel </v-card-title>
@@ -54,9 +54,5 @@ const handleLogin = async () => {
     loading.value = false;
     router.push("/admin/main");
   }
-};
-
-const handleSignOut = async () => {
-  const { error } = await supabase.auth.signOut();
 };
 </script>

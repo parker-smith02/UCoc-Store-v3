@@ -4,6 +4,11 @@ export async function authGuard(to, from, next) {
     data: { user },
   } = await supabase.auth.getUser();
   console.log(user);
+
+  if (to.name === "admin login" && !!user) {
+    return next({ name: "admin" });
+  }
+
   if (!to.meta.authRequired || !!user) {
     return next();
   } else {

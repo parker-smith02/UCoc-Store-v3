@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="admin">
     <AdminNav />
     <v-row>
       <main>
@@ -13,6 +13,12 @@
             adding new content, any field that takes multiple values (sizes,
             colors) should be entered like so: S, M, L, XL</v-card-text
           >
+          <v-row class="pa-4">
+            <v-btn class="mx-4" color="primary" @click="handleSignOut"
+              >Sign Out</v-btn
+            >
+            <v-btn class="mx-4" color="primary">Add New Admin User</v-btn>
+          </v-row>
         </v-card>
         <AdminProductTable
           :items="merchItems"
@@ -43,6 +49,7 @@ import AdminNav from "../components/admin/AdminNav.vue";
 import GroupOrderTable from "../components/admin/GroupOrderTable.vue";
 import MemberTable from "../components/admin/MemberTable.vue";
 import TripsTable from "../components/admin/TripsTable.vue";
+import router from "../router";
 
 const merchItems = ref({});
 const groupOrderItems = ref({});
@@ -52,6 +59,7 @@ const members = ref([]);
 const memberTableKey = ref(0);
 const trips = ref({});
 const tripTableKey = ref(0);
+const loading = ref(false);
 
 const fetchMerch = async () => {
   const query = supabase.from("merch").select("*");
@@ -100,10 +108,12 @@ const fetchTrips = async () => {
 };
 
 onMounted(() => {
+  loading.value = true;
   fetchMerch();
   fetchGroupOrders();
   fetchMembers();
   fetchTrips();
+  loading.value = false;
 });
 
 const updateMerchTable = () => {
@@ -116,5 +126,10 @@ const updateGroupOrderTable = () => {
 
 const updateTripsTable = () => {
   fetchTrips();
+};
+
+const handleSignOut = async () => {
+  const { error } = await supabase.auth.signOut();
+  router.push("/");
 };
 </script>
