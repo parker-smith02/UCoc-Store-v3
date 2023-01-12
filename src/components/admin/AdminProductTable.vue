@@ -32,6 +32,7 @@
               <li v-for="color in item.colors" :key="color">{{ color }}</li>
             </ul>
           </td>
+          <td>${{ item.price }}</td>
           <td>
             <ConfirmDelete :name="item.name" @confirm-delete="handleDelete" />
           </td>

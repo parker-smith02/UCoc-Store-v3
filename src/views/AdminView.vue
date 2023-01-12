@@ -1,8 +1,8 @@
 <template>
   <div class="admin">
-    <AdminNav />
     <v-row>
       <main>
+        <v-spacer class="mb-32" />
         <v-card class="ma-8 pa-4">
           <v-card-title>Site Admin Page</v-card-title>
           <v-card-text

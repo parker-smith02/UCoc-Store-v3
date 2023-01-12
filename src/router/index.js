@@ -8,6 +8,7 @@ import GroupOrderView from "../views/GroupOrderView.vue";
 import AboutView from "../views/AboutView.vue";
 import HowView from "../views/HowView.vue";
 import CartView from "../views/CartView.vue";
+import MerchDetailView from "../views/MerchDetailView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -17,6 +18,11 @@ const router = createRouter({
       name: "home",
       meta: { authRequired: false },
       component: HomeView,
+    },
+    {
+      path: "/merch/:name",
+      meta: { authRequired: false },
+      component: MerchDetailView,
     },
     {
       path: "/trips",

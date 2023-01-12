@@ -35,11 +35,18 @@
                   required
                 ></v-textarea>
               </v-col>
-              <v-col cols="12">
+              <v-col cols="6">
                 <v-text-field
                   label="Quantity"
                   required
                   v-model="formQuantity"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="6">
+                <v-text-field
+                  label="Price"
+                  v-model="formPrice"
+                  hint="EX: 7.00"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="6">
@@ -88,11 +95,24 @@ const formSizes = ref("");
 const formQuantity = ref(null);
 const formColors = ref("");
 const formImageArr = ref();
+const formPrice = ref();
+let imgUrls = [];
 
-const handleFormSubmit = async () => {
+const handleFormSubmit = () => {
   dialog.value = false;
+  handleImageUpload();
+  setTimeout(() => {
+    //DO THIS BETTER
+    uploadData();
+  }, 7000);
+
+  emit("formSubmit");
+};
+
+const uploadData = async () => {
   const sizeArr = formatArray(formSizes.value);
   const colorArr = formatArray(formColors.value);
+  console.log("COLORS", colorArr);
   const query = supabase.from("merch").insert([
     {
       name: formName.value,
@@ -100,6 +120,8 @@ const handleFormSubmit = async () => {
       sizes: sizeArr,
       quantity: formQuantity.value,
       colors: colorArr,
+      img_urls: imgUrls,
+      price: formPrice.value,
     },
   ]);
   const { data, error } = await query;
@@ -108,8 +130,6 @@ const handleFormSubmit = async () => {
     return false;
   }
   console.log(data);
-  await handleImageUpload();
-  emit("formSubmit");
 };
 
 const handleImageUpload = async () => {
@@ -129,15 +149,23 @@ const handleImageUpload = async () => {
         console.log(error);
         return false;
       }
+      const { data: publicUrl, error } = supabase.storage
+        .from("images")
+        .getPublicUrl(`merch/${formName.value}/${filePath}`);
+      if (error) {
+        console.log(error);
+      }
+      imgUrls.push(publicUrl.publicUrl);
     } catch (error) {
       alert(error.message);
     }
   });
+  console.log("ALL URLS", imgUrls);
 };
 
 const formatArray = (formData) => {
+  console.log(formData);
   const arr = formData.split(",");
-  console.log(arr);
   return arr;
 };
 </script>

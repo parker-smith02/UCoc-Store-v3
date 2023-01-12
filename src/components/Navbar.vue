@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar color="dark-grey">
+  <v-app-bar color="dark-grey" class="pa-2">
     <v-app-bar-nav-icon>
       <img class="logo" src="../assets/logo.png" />
     </v-app-bar-nav-icon>
@@ -46,16 +46,18 @@
     >
     <v-row>
       <v-col class="px-6">
-        <v-btn
-          icon="mdi-cart-outline"
-          @click="!!store.cartSize ? router.push('/cart') : null"
-        ></v-btn>
-        <v-chip v-if="!!store.cartSize" size="x-small" class="cart-status">{{
-          store.cartSize
-        }}</v-chip>
+        <v-badge :content="store.cartSize">
+          <v-btn
+            icon="mdi-cart-outline"
+            @click="!!store.cartSize ? router.push('/cart') : null"
+          ></v-btn>
+        </v-badge>
       </v-col>
     </v-row>
   </v-app-bar>
+  <v-snackbar v-model="store.snackbar" timeout="3000">
+    <p class="text-body-1 ma-auto">Item Added To Cart</p>
+  </v-snackbar>
 </template>
 <script setup>
 import { onMounted, ref } from "@vue/runtime-core";
