@@ -12,7 +12,12 @@
           </v-carousel>
         </v-col>
         <v-col>
-          <v-card-title class="text-h2 pa-6">{{ product.name }}</v-card-title>
+          <v-card-title v-if="!mobile" class="text-h2 pa-6">{{
+            product.name
+          }}</v-card-title>
+          <v-card-title v-else class="text-h3 pa-6">{{
+            product.name
+          }}</v-card-title>
           <v-card-text class="text-h5 my-8 text-grey"
             >${{ product.price }}</v-card-text
           >
@@ -120,8 +125,10 @@
 <script setup>
 import { onMounted, ref } from "vue-demi";
 import { useRoute, useRouter } from "vue-router";
+import { useDisplay } from "vuetify/lib/framework.mjs";
 import { useCartStore, useMerchStore } from "../stores/primary";
 
+const { mobile } = useDisplay();
 const route = useRoute();
 const router = useRouter();
 const merchStore = useMerchStore();
@@ -143,6 +150,8 @@ onMounted(() => {
   carouselKey.value++;
   sizeLen.value = product.value.sizes.length;
   colorLen.value = product.value.colors.length;
+  colorLen.value <= 1 ? (selectedColor.value = product.value.colors[0]) : null;
+  sizeLen.value <= 1 ? (selectedSize.value = product.value.sizes[0]) : null;
 });
 
 const decrease = () => {
@@ -151,7 +160,7 @@ const decrease = () => {
 
 const handleAddToCart = async () => {
   const { valid } = await form.value.validate();
-  if (valid) {
+  if (valid && product.value.quantity >= 1) {
     console.log("valid");
     cartStore.$patch((state) => {
       state.items.push({
@@ -162,6 +171,7 @@ const handleAddToCart = async () => {
       });
       state.cartSize = state.cartSize + selectedQuantity.value;
       state.snackbar = true;
+      state.cartTotal += product.value.price * selectedQuantity.value;
     });
     router.push("/");
   }

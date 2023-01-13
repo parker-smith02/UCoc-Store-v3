@@ -14,6 +14,7 @@
   "dependencies": {
     "@mdi/font": "^7.1.96",
     "@mdi/js": "^7.1.96",
+    "@stripe/stripe-js": "^1.46.0",
     "@supabase/supabase-js": "^2.2.2",
     "@vueuse/core": "^9.10.0",
     "pinia": "^2.0.28",

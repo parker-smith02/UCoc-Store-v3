@@ -8,7 +8,15 @@ export const useCartStore = defineStore("cart", {
       snackbar: false,
       items: useStorage("items", []),
       cartSize: useStorage("cartSize", 0),
+      cartTotal: useStorage("cartTotal", 0),
     };
+  },
+  actions: {
+    removeItem(name) {
+      const item = this.items.find((product) => product.name == name);
+      this.items.splice(item, 1);
+      this.cartSize -= item.quantity;
+    },
   },
 });
 

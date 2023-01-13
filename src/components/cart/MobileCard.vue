@@ -1,22 +1,22 @@
 <template>
-  <td>
-    <v-btn
-      icon="mdi-delete"
-      color="rgb(15, 10, 40)"
-      @click="handleDelete"
-    ></v-btn>
-  </td>
-  <td class="pa-4">
-    <v-img :src="thumbnail" height="100px" width="100px" />
-  </td>
-  <td class="text-body-1">{{ product.name }}</td>
-  <td class="text-body-1">{{ cartItem.size }}</td>
-  <td class="text-body-1">{{ cartItem.color }}</td>
-  <td class="text-body-1">${{ product.price }}</td>
-  <td class="text-body-1">{{ cartItem.quantity }}</td>
-  <td class="text-body-1">${{ subtotal }}</td>
+  <v-card color="rgb(15, 10, 40)" class="pa-4" elevation="10">
+    <v-card-title>{{ product.name }}</v-card-title>
+    <v-row>
+      <v-col>
+        <v-img :src="thumbnail" height="auto" width="auto" />
+      </v-col>
+      <v-col>
+        <v-card-text> Size: {{ cartItem.size }} </v-card-text>
+        <v-card-text> Color: {{ cartItem.color }} </v-card-text>
+        <v-card-text> ${{ product.price }} </v-card-text>
+        <v-card-text> Quantity: {{ cartItem.quantity }} </v-card-text>
+      </v-col>
+    </v-row>
+    <v-card-actions @click="handleDelete">
+      <v-icon icon="mdi-delete" />
+    </v-card-actions>
+  </v-card>
 </template>
-
 <script setup>
 import { ref, onMounted } from "vue-demi";
 import { useCartStore, useMerchStore } from "../../stores/primary";
