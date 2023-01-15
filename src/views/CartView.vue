@@ -76,9 +76,26 @@
             :key="item"
             :cart-item="item"
           />
-          <v-btn class="my-4" color="black" @click="handleCheckout"
-            >Go To Checkout</v-btn
-          >
+          <v-form ref="form" v-model="valid">
+            <v-text-field
+              :rules="[(v) => (v || '').length > 0 || 'Required']"
+              label="Name"
+              hint="First, Last"
+              v-model="orderName"
+            ></v-text-field>
+            <v-text-field
+              :rules="[(v) => (v || '').length > 0 || 'Required']"
+              label="UConn Email"
+              v-model="orderEmail"
+            ></v-text-field>
+            <v-btn
+              :disabled="loading"
+              class="text-body-1"
+              color="rgb(15, 10, 40)"
+              @click.prevent="handleCheckout"
+              >Go To Checkout</v-btn
+            >
+          </v-form>
         </v-main>
       </template>
     </v-card>
