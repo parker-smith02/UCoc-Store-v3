@@ -1,6 +1,6 @@
 <template>
   <v-container @keypress.enter="handleLogin">
-    <v-row justify="center">
+    <v-row justify="center" class="my-12">
       <v-card width="32rem">
         <v-card-title> Log in to View Admin Panel </v-card-title>
         <v-col class="pa-8">
@@ -29,7 +29,7 @@
 </template>
 
 <script setup>
-import { ref } from "@vue/reactivity";
+import { ref } from "@vue/runtime-core";
 import { supabase } from "../supabase";
 import router from "../router";
 

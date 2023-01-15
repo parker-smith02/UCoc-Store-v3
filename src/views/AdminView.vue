@@ -1,43 +1,46 @@
 <template>
   <div class="admin">
-    <v-row>
-      <main>
-        <v-spacer class="mb-32" />
-        <v-card class="ma-8 pa-4">
-          <v-card-title>Site Admin Page</v-card-title>
-          <v-card-text
-            >This is where officers can manipulate the content of the site.
-            There is a table for each different feature of the site that shows
-            the current site content for each section. In each of these tables,
-            content can be added or removed to update products/make trips. When
-            adding new content, any field that takes multiple values (sizes,
-            colors) should be entered like so: S, M, L, XL</v-card-text
+    <v-main class="justify-center">
+      <v-spacer class="mb-32" />
+      <v-card class="ma-8 pa-4">
+        <v-card-title>Site Admin Page</v-card-title>
+        <v-card-text
+          >This is where officers can manipulate the content of the site. There
+          is a table for each different feature of the site that shows the
+          current site content for each section. In each of these tables,
+          content can be added or removed to update products/make trips. When
+          adding new content, any field that takes multiple values (sizes,
+          colors) should be entered like so: S, M, L, XL.</v-card-text
+        >
+        <v-card-text
+          >When adding any product with payments involved (merch, group orders)
+          the product must also be added to stripe
+          https://dashboard.stripe.com/dashboard.</v-card-text
+        >
+        <v-row class="pa-4">
+          <v-btn class="mx-4" color="primary" @click="handleSignOut"
+            >Sign Out</v-btn
           >
-          <v-row class="pa-4">
-            <v-btn class="mx-4" color="primary" @click="handleSignOut"
-              >Sign Out</v-btn
-            >
-            <v-btn class="mx-4" color="primary">Add New Admin User</v-btn>
-          </v-row>
-        </v-card>
-        <AdminProductTable
-          :items="merchItems"
-          :key="productTableKey"
-          @table-updated="updateMerchTable"
-        />
-        <GroupOrderTable
-          :items="groupOrderItems"
-          :key="groupOrderTableKey"
-          @table-updated="updateGroupOrderTable"
-        />
-        <MemberTable :members="members" :key="memberTableKey" />
-        <TripsTable
-          :trips="trips"
-          :key="tripTableKey"
-          @table-updated="updateTripsTable"
-        />
-      </main>
-    </v-row>
+          <v-btn class="mx-4" color="primary">Add New Admin User</v-btn>
+        </v-row>
+      </v-card>
+      <AdminProductTable
+        :items="merchItems"
+        :key="productTableKey"
+        @table-updated="updateMerchTable"
+      />
+      <GroupOrderTable
+        :items="groupOrderItems"
+        :key="groupOrderTableKey"
+        @table-updated="updateGroupOrderTable"
+      />
+      <MemberTable :members="members" :key="memberTableKey" />
+      <TripsTable
+        :trips="trips"
+        :key="tripTableKey"
+        @table-updated="updateTripsTable"
+      />
+    </v-main>
   </div>
 </template>
 <script setup>

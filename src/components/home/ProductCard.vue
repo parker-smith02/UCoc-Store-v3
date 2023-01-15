@@ -24,7 +24,7 @@
   </v-card>
 </template>
 <script setup>
-import { onMounted, ref } from "vue-demi";
+import { onMounted, ref } from "@vue/runtime-core";
 
 const thumbnail = ref(props.product.img_urls[0]);
 

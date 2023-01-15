@@ -46,7 +46,7 @@
     >
     <v-row>
       <v-col class="px-6">
-        <v-badge :content="store.cartSize">
+        <v-badge :content="store.cartSize" :key="cartKey">
           <v-btn
             icon="mdi-cart-outline"
             @click="!!store.cartSize ? router.push('/cart') : null"
@@ -60,13 +60,18 @@
   </v-snackbar>
 </template>
 <script setup>
-import { onMounted, ref } from "@vue/runtime-core";
+import { onMounted, ref, watch } from "@vue/runtime-core";
 import { useCartStore } from "../stores/primary.js";
 import { supabase } from "../supabase";
 import logo from "../assets/logo.png";
 import router from "../router";
 
 const store = useCartStore();
+const cartKey = ref(0);
+
+watch(store.cartSize, () => {
+  cartKey.value++;
+});
 
 onMounted(async () => {});
 </script>

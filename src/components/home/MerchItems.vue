@@ -15,7 +15,7 @@
   </v-card>
 </template>
 <script setup>
-import { onMounted, ref } from "vue-demi";
+import { ref, onMounted } from "@vue/runtime-core";
 import { useMerchStore } from "../../stores/primary";
 import ProductCard from "./ProductCard.vue";
 
@@ -23,12 +23,6 @@ const loading = ref(false);
 const store = useMerchStore();
 
 onMounted(async () => {
-  if (store.products.length === 0) {
-    loading.value = true;
-    await store.fetchMerch();
-    loading.value = false;
-  } else {
-    console.log("Data already here");
-  }
+  store.fetchMerch();
 });
 </script>

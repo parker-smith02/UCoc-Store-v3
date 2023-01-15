@@ -27,13 +27,20 @@
                   required
                 ></v-text-field>
               </v-col>
-              <v-col cols="12">
+              <v-col cols="6">
                 <v-textarea
                   label="Description"
                   v-model="formDesc"
                   persistent-hint
                   required
                 ></v-textarea>
+              </v-col>
+              <v-col cols="6">
+                <v-text-field
+                  label="Stripe api id"
+                  v-model="formApiId"
+                  required
+                ></v-text-field>
               </v-col>
               <v-col cols="6">
                 <v-text-field
@@ -97,6 +104,7 @@ const formColors = ref("");
 const formImageArr = ref();
 const formPrice = ref();
 let imgUrls = [];
+const formApiId = ref("");
 
 const handleFormSubmit = () => {
   dialog.value = false;
@@ -104,9 +112,8 @@ const handleFormSubmit = () => {
   setTimeout(() => {
     //DO THIS BETTER
     uploadData();
+    emit("formSubmit");
   }, 7000);
-
-  emit("formSubmit");
 };
 
 const uploadData = async () => {
@@ -122,6 +129,7 @@ const uploadData = async () => {
       colors: colorArr,
       img_urls: imgUrls,
       price: formPrice.value,
+      api_id: formApiId.value,
     },
   ]);
   const { data, error } = await query;

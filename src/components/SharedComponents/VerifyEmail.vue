@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue-demi";
+import { ref } from "@vue/runtime-core";
 import { supabase } from "../../supabase";
 
 const dialog = ref(false);

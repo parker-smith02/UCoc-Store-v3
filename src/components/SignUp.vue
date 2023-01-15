@@ -29,7 +29,7 @@
   </v-container>
 </template>
 <script setup>
-import { ref } from "@vue/reactivity";
+import { ref } from "@vue/runtime-core";
 import { supabase } from "../supabase";
 
 const userEmail = ref("");

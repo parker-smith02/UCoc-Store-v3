@@ -94,7 +94,7 @@
                     height="2rem"
                     class="mx-4"
                     color="rgb(15, 10, 40)"
-                    @click="selectedQuantity++"
+                    @click.prevent="selectedQuantity++"
                     >+</v-btn
                   >
                 </v-row>
@@ -112,7 +112,7 @@
               <v-btn
                 class="my-4"
                 color="rgb(15, 10, 40)"
-                @click="handleAddToCart"
+                @click.prevent="handleAddToCart"
                 >Add to Cart</v-btn
               >
             </v-col>
@@ -123,7 +123,7 @@
   </v-main>
 </template>
 <script setup>
-import { onMounted, ref } from "vue-demi";
+import { onMounted, ref } from "@vue/runtime-core";
 import { useRoute, useRouter } from "vue-router";
 import { useDisplay } from "vuetify/lib/framework.mjs";
 import { useCartStore, useMerchStore } from "../stores/primary";

@@ -9,7 +9,7 @@ import AboutView from "../views/AboutView.vue";
 import HowView from "../views/HowView.vue";
 import CartView from "../views/CartView.vue";
 import MerchDetailView from "../views/MerchDetailView.vue";
-import CheckoutView from "../views/CheckoutView.vue";
+import ConfirmationView from "../views/ConfirmationView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -56,10 +56,10 @@ const router = createRouter({
       component: CartView,
     },
     {
-      path: "/checkout",
-      name: "checkout",
+      path: "/confirmation",
+      name: "confirmation",
       meta: { authRequired: false },
-      component: CheckoutView,
+      component: ConfirmationView,
     },
     {
       path: "/admin",
