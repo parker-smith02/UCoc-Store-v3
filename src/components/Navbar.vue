@@ -25,6 +25,14 @@
       variant="text"
       height="100%"
       rounded="0"
+      @click="router.push('/gear')"
+      >Gear</v-btn
+    >
+    <v-btn
+      class="px-6"
+      variant="text"
+      height="100%"
+      rounded="0"
       @click="router.push('group_orders')"
       >Group Orders</v-btn
     >

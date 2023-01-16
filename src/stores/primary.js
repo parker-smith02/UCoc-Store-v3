@@ -74,3 +74,37 @@ export const useMerchStore = defineStore("merch", {
     },
   },
 });
+
+export const useGearStore = defineStore("gear", {
+  state: () => {
+    return {
+      dataRetrieved: false,
+      gear: useStorage("gear", []),
+    };
+  },
+  getters: {
+    getCampingGear: (state) => {
+      return state.gear;
+    },
+    getBackpacks: (state) => {},
+    getSkiGear: (state) => {},
+    getWinterGear: (state) => {},
+    getMountaineeringGear: (state) => {},
+    getCampingGear: (state) => {},
+    getClimbingGear: (state) => {},
+    getWaterGear: (state) => {},
+    getOtherGear: (state) => {},
+  },
+  actions: {
+    async fetchGear() {
+      const { data: gearData, error } = await supabase.from("gear").select("*");
+      if (error) {
+        console.log(error);
+        return fasle;
+      }
+      this.gear.value = null;
+      this.gear = [...gearData];
+      this.dataRetrieved = true;
+    },
+  },
+});

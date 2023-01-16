@@ -64,7 +64,7 @@ onMounted(() => {
   actionCount.value = 0;
   if (orderStore.orders.length > 0) {
     order.value = orderStore.orders[0];
-    firstName.value = order.value.name.split()[0];
+    firstName.value = order.value.name.split(" ")[0];
     handleOrderUpload();
     sendEmail();
   }

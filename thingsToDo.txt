@@ -1,0 +1,10 @@
+in admin panel:
+    add table for managing gear, including confirming a request, and confirming a return
+
+For merch:
+    After successful order, update db to reflect new quantity on items
+
+trips:
+
+Calentar in Home page:
+    

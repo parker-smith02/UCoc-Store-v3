@@ -1,7 +1,5 @@
 <template>
-  <v-app theme="dark">
-    <Navbar />
-  </v-app>
+  <v-app theme="dark"> </v-app>
 </template>
 <script setup>
 import Navbar from "../components/Navbar.vue";

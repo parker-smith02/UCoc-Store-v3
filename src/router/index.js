@@ -10,6 +10,7 @@ import HowView from "../views/HowView.vue";
 import CartView from "../views/CartView.vue";
 import MerchDetailView from "../views/MerchDetailView.vue";
 import ConfirmationView from "../views/ConfirmationView.vue";
+import GearView from "../views/GearView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -60,6 +61,12 @@ const router = createRouter({
       name: "confirmation",
       meta: { authRequired: false },
       component: ConfirmationView,
+    },
+    {
+      path: "/gear",
+      name: "gear",
+      meta: { authRequired: false },
+      component: GearView,
     },
     {
       path: "/admin",

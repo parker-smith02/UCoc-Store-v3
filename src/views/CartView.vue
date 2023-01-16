@@ -102,7 +102,6 @@
   </v-main>
 </template>
 <script setup>
-import VerifyEmail from "../components/SharedComponents/VerifyEmail.vue";
 import Navbar from "../components/Navbar.vue";
 import { useCartStore, useMerchStore, useOrdersStore } from "../stores/primary";
 import CartRow from "../components/cart/CartRow.vue";
