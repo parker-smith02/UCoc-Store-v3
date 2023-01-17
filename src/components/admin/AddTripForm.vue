@@ -74,13 +74,33 @@
                   label="Start Date"
                   required
                 ></v-text-field>
-                <v-text-field
-                  v-model="formEndDate"
-                  type="date"
-                  label="End Date"
-                  hint="Leave Blank for a Daytrip"
-                ></v-text-field>
               </v-col>
+              <v-row>
+                <v-col>
+                  <v-text-field
+                    v-model="formPrice"
+                    label="Price"
+                    hint="Leave blank if trip is free"
+                  >
+                  </v-text-field>
+                </v-col>
+                <v-col>
+                  <v-text-field
+                    v-model="formApiId"
+                    label="Stripe Api Id"
+                    hint="Leave Blank if Trip is
+                Free"
+                  ></v-text-field>
+                </v-col>
+                <v-col>
+                  <v-text-field
+                    v-model="formEndDate"
+                    type="date"
+                    label="End Date"
+                    hint="Use same date if daytrip"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
             </v-row>
           </v-container>
           <small>*indicates required field</small>
@@ -109,26 +129,32 @@ const formTitle = ref("");
 const formDesc = ref("");
 const formActivityLevel = ref("");
 const formLocation = ref("");
-const formSpots = ref(0);
+const formSpots = ref();
 const formImageArr = ref();
 const formItems = ref("");
 const formStartDate = ref("");
 const formEndDate = ref("");
+const formPrice = ref();
+const formApiId = ref("");
+let imgUrls = [];
 
-const handleFormSubmit = async () => {
-  dialog.value = false;
+const uploadData = async () => {
   const itemArr = formatArray(formItems.value);
+  console.log(formEndDate.value);
   const query = supabase.from("trips").insert([
     {
       title: formTitle.value,
       description: formDesc.value,
       start_date: formStartDate.value,
-      end_date: formEndDate.value,
+      end_date: formEndDate.value ? formEndDate.value : null,
       activity_level: formActivityLevel.value,
       things_to_bring: itemArr,
       number_of_spots: formSpots.value,
       number_of_signups: 0,
       location: formLocation.value,
+      price: formPrice.value,
+      api_id: formApiId.value,
+      img_urls: imgUrls,
     },
   ]);
   const { data, error } = await query;
@@ -137,8 +163,15 @@ const handleFormSubmit = async () => {
     return false;
   }
   console.log(data);
-  await handleImageUpload();
   emit("formSubmit");
+};
+
+const handleFormSubmit = async () => {
+  dialog.value = false;
+  handleImageUpload();
+  setTimeout(() => {
+    uploadData();
+  }, 7000);
 };
 
 const handleImageUpload = async () => {
@@ -158,6 +191,13 @@ const handleImageUpload = async () => {
         console.log(error);
         return false;
       }
+      const { data: publicUrl, error } = supabase.storage
+        .from("images")
+        .getPublicUrl(`trips/${formTitle.value}/${filePath}`);
+      if (error) {
+        console.log(error);
+      }
+      imgUrls.push(publicUrl.publicUrl);
     } catch (error) {
       alert(error.message);
     }

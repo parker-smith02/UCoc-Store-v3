@@ -5,6 +5,7 @@ For merch:
     After successful order, update db to reflect new quantity on items
 
 trips:
+    add sign up functionality, base off of gear renting
 
-Calentar in Home page:
+Calendar in Home page:
     

@@ -11,6 +11,7 @@ import CartView from "../views/CartView.vue";
 import MerchDetailView from "../views/MerchDetailView.vue";
 import ConfirmationView from "../views/ConfirmationView.vue";
 import GearView from "../views/GearView.vue";
+import TripDetail from "../components/trips/TripDetail.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -31,6 +32,11 @@ const router = createRouter({
       name: "trips",
       meta: { authRequired: false },
       component: TripsView,
+    },
+    {
+      path: "/trips/:id",
+      meta: { authRequired: false },
+      component: TripDetail,
     },
     {
       path: "/group_orders",

@@ -41,6 +41,34 @@ export const useOrdersStore = defineStore("orders", {
   },
 });
 
+export const useTripStore = defineStore("trips", {
+  state: () => {
+    return {
+      dataRetrieved: false,
+      trips: useStorage("trips", []),
+    };
+  },
+  getters: {
+    getTripById: (state) => {
+      return (id) => state.trips.find((trip) => trip.id === id);
+    },
+  },
+  actions: {
+    async fetchTrips() {
+      const { data: tripData, error: tripError } = await supabase
+        .from("trips")
+        .select("*");
+      if (tripError) {
+        console.log(tripError);
+        return false;
+      }
+      this.trips.value = null;
+      this.trips = [...tripData];
+      this.dataRetrieved = true;
+    },
+  },
+});
+
 export const useMerchStore = defineStore("merch", {
   state: () => {
     return {
@@ -83,9 +111,7 @@ export const useGearStore = defineStore("gear", {
     };
   },
   getters: {
-    getCampingGear: (state) => {
-      return state.gear;
-    },
+    getCampingGear: (state) => {},
     getBackpacks: (state) => {},
     getSkiGear: (state) => {},
     getWinterGear: (state) => {},
