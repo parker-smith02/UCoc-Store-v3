@@ -1,7 +1,7 @@
 <template>
   <div class="admin">
-    <v-main class="justify-center">
-      <v-spacer class="mb-32" />
+    <v-spacer class="mb-32" />
+    <v-container class="ma-auto">
       <v-card class="ma-8 pa-4">
         <v-card-title>Site Admin Page</v-card-title>
         <v-card-text
@@ -40,7 +40,7 @@
         :key="tripTableKey"
         @table-updated="updateTripsTable"
       />
-    </v-main>
+    </v-container>
   </div>
 </template>
 <script setup>

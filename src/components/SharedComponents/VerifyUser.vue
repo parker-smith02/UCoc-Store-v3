@@ -40,7 +40,9 @@
             {{
               user.phone_number
                 ? user.phone_number
-                : "None on File, Please Enter Below"
+                : user.dues
+                ? `None on file, Please Enter Below`
+                : `None on File`
             }}
           </span>
         </v-card-text>
@@ -49,7 +51,7 @@
             :rules="rules"
             class="ma-4"
             v-model="phoneNumber"
-            v-if="!user.phone_number"
+            v-if="!user.phone_number && user.dues"
             label="Please Enter Your Phone Number"
             hint="Phone numbers will not be shared with anyone. Phone numbers are used in the event we need to contact you regarding gear or a trip."
           ></v-text-field>

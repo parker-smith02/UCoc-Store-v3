@@ -1,6 +1,6 @@
 <template>
   <v-app-bar color="dark-grey" class="pa-2">
-    <v-app-bar-nav-icon>
+    <v-app-bar-nav-icon @click="router.push('/')">
       <img class="logo" src="../assets/logo.png" />
     </v-app-bar-nav-icon>
     <v-app-bar-title>UConn Outing Club</v-app-bar-title>
@@ -33,7 +33,7 @@
       variant="text"
       height="100%"
       rounded="0"
-      @click="router.push('group_orders')"
+      @click="router.push('/group_orders')"
       >Group Orders</v-btn
     >
     <v-btn

@@ -107,7 +107,7 @@ const fetchedUser = ref({});
 const radioRules = ref([(v) => !!v || "Please Select a Size"]);
 const emailRules = ref([
   (v) => !!v || "E-mail is required",
-  (v) => /[a-zA-Z]+@uconn\.edu/.test(v) || "Must be a valid UConn email",
+  (v) => /[a-zA-Z0-9]+@uconn\.edu/.test(v) || "Must be a valid UConn email",
 ]);
 const selectedQuantity = ref(1);
 
